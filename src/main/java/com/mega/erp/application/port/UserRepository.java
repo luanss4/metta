@@ -1,6 +1,7 @@
 package com.mega.erp.application.port;
 
 import com.mega.erp.domain.model.User;
+import java.util.List;
 import java.util.Optional;
 
 public interface UserRepository {
@@ -9,4 +10,6 @@ public interface UserRepository {
     Optional<User> findByUsername(String username);
     boolean existsByUsername(String username);
     boolean existsByEmail(String email);
+    List<User> findAllActive();
+    void deleteById(Long id);
 }

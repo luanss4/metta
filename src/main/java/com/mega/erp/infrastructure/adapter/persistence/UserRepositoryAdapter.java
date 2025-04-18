@@ -5,6 +5,7 @@ import com.mega.erp.domain.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -36,5 +37,15 @@ public class UserRepositoryAdapter implements UserRepository {
     @Override
     public boolean existsByEmail(String email) {
         return jpaUserRepository.existsByEmail(email);
+    }
+
+    @Override
+    public List<User> findAllActive() {
+        return jpaUserRepository.findAllByActiveTrue();
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        jpaUserRepository.deleteById(id);
     }
 }
