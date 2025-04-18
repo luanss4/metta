@@ -2,165 +2,153 @@ package com.mega.erp.infrastructure.adapter.web;
 
 import com.mega.erp.application.service.ProductService;
 import com.mega.erp.domain.model.Product;
+import com.mega.erp.infrastructure.adapter.web.dto.ProductRequestDTO;
+import com.mega.erp.infrastructure.adapter.web.dto.ProductResponseDTO;
+import com.mega.erp.infrastructure.adapter.web.mapper.ProductDTOMapper;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/products")
 @RequiredArgsConstructor
+@Tag(name = "Product", description = "Product management API")
 public class ProductController {
 
     private final ProductService productService;
+    private final ProductDTOMapper productMapper;
 
     @GetMapping
-    public ResponseEntity<List<Product>> getAllProducts() {
-        return ResponseEntity.ok(productService.getAllProducts());
+    @Operation(summary = "Get all products", description = "Returns a list of all active products")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Successfully retrieved products",
+                content = @Content(mediaType = "application/json", 
+                schema = @Schema(implementation = ProductResponseDTO.class)))
+    })
+    public ResponseEntity<List<ProductResponseDTO>> getAllProducts() {
+        List<Product> products = productService.getAllProducts();
+        return ResponseEntity.ok(productMapper.toResponseDTOList(products));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Product> getProductById(@PathVariable Long id) {
+    @Operation(summary = "Get product by ID", description = "Returns a product by its ID")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Successfully retrieved product",
+                content = @Content(mediaType = "application/json", 
+                schema = @Schema(implementation = ProductResponseDTO.class))),
+        @ApiResponse(responseCode = "404", description = "Product not found")
+    })
+    public ResponseEntity<ProductResponseDTO> getProductById(
+            @Parameter(description = "Product ID", required = true) @PathVariable Long id) {
         return productService.getProductById(id)
-                .map(ResponseEntity::ok)
+                .map(product -> ResponseEntity.ok(productMapper.toResponseDTO(product)))
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping("/barcode/{barcode}")
-    public ResponseEntity<Product> getProductByBarcode(@PathVariable String barcode) {
+    @Operation(summary = "Get product by barcode", description = "Returns a product by its barcode")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Successfully retrieved product",
+                content = @Content(mediaType = "application/json", 
+                schema = @Schema(implementation = ProductResponseDTO.class))),
+        @ApiResponse(responseCode = "404", description = "Product not found")
+    })
+    public ResponseEntity<ProductResponseDTO> getProductByBarcode(
+            @Parameter(description = "Product barcode", required = true) @PathVariable String barcode) {
         return productService.getProductByBarcode(barcode)
-                .map(ResponseEntity::ok)
+                .map(product -> ResponseEntity.ok(productMapper.toResponseDTO(product)))
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<Product>> searchProducts(@RequestParam String name) {
-        return ResponseEntity.ok(productService.searchProductsByName(name));
+    @Operation(summary = "Search products by name", description = "Returns products containing the search term in their name")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Successfully retrieved products",
+                content = @Content(mediaType = "application/json", 
+                schema = @Schema(implementation = ProductResponseDTO.class)))
+    })
+    public ResponseEntity<List<ProductResponseDTO>> searchProducts(
+            @Parameter(description = "Search term", required = true) @RequestParam String name) {
+        List<Product> products = productService.searchProductsByName(name);
+        return ResponseEntity.ok(productMapper.toResponseDTOList(products));
     }
 
     @GetMapping("/category/{category}")
-    public ResponseEntity<List<Product>> getProductsByCategory(@PathVariable String category) {
-        return ResponseEntity.ok(productService.getProductsByCategory(category));
+    @Operation(summary = "Get products by category", description = "Returns products in the specified category")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Successfully retrieved products",
+                content = @Content(mediaType = "application/json", 
+                schema = @Schema(implementation = ProductResponseDTO.class)))
+    })
+    public ResponseEntity<List<ProductResponseDTO>> getProductsByCategory(
+            @Parameter(description = "Product category", required = true) @PathVariable String category) {
+        List<Product> products = productService.getProductsByCategory(category);
+        return ResponseEntity.ok(productMapper.toResponseDTOList(products));
     }
 
     @PostMapping
-    public ResponseEntity<?> createProduct(@Valid @RequestBody ProductRequest productRequest) {
+    @Operation(summary = "Create a new product", description = "Creates a new product with the provided data")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "201", description = "Product created successfully",
+                content = @Content(mediaType = "application/json", 
+                schema = @Schema(implementation = ProductResponseDTO.class))),
+        @ApiResponse(responseCode = "400", description = "Invalid input data")
+    })
+    public ResponseEntity<?> createProduct(
+            @Parameter(description = "Product data", required = true) 
+            @Valid @RequestBody ProductRequestDTO productRequest) {
         try {
-            Product product = mapToProduct(productRequest);
+            Product product = productMapper.toProduct(productRequest);
             Product createdProduct = productService.createProduct(product);
-            return ResponseEntity.status(HttpStatus.CREATED).body(createdProduct);
+            return ResponseEntity.status(HttpStatus.CREATED)
+                    .body(productMapper.toResponseDTO(createdProduct));
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateProduct(@PathVariable Long id, @Valid @RequestBody ProductRequest productRequest) {
+    @Operation(summary = "Update a product", description = "Updates an existing product with the provided data")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Product updated successfully",
+                content = @Content(mediaType = "application/json", 
+                schema = @Schema(implementation = ProductResponseDTO.class))),
+        @ApiResponse(responseCode = "400", description = "Invalid input data"),
+        @ApiResponse(responseCode = "404", description = "Product not found")
+    })
+    public ResponseEntity<?> updateProduct(
+            @Parameter(description = "Product ID", required = true) @PathVariable Long id,
+            @Parameter(description = "Updated product data", required = true) 
+            @Valid @RequestBody ProductRequestDTO productRequest) {
         try {
-            Product product = mapToProduct(productRequest);
+            Product product = productMapper.toProduct(productRequest);
             Product updatedProduct = productService.updateProduct(id, product);
-            return ResponseEntity.ok(updatedProduct);
+            return ResponseEntity.ok(productMapper.toResponseDTO(updatedProduct));
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
+    @Operation(summary = "Delete a product", description = "Soft deletes a product by setting its active status to false")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "204", description = "Product deleted successfully"),
+        @ApiResponse(responseCode = "404", description = "Product not found")
+    })
+    public ResponseEntity<Void> deleteProduct(
+            @Parameter(description = "Product ID", required = true) @PathVariable Long id) {
         productService.deleteProduct(id);
         return ResponseEntity.noContent().build();
-    }
-
-    private Product mapToProduct(ProductRequest request) {
-        Product product = new Product();
-        product.setName(request.getName());
-        product.setDescription(request.getDescription());
-        product.setBarcode(request.getBarcode());
-        product.setPrice(request.getPrice());
-        product.setStockQuantity(request.getStockQuantity());
-        product.setCategory(request.getCategory());
-        product.setManufacturer(request.getManufacturer());
-        product.setLocation(request.getLocation());
-        return product;
-    }
-
-    // Request DTO
-    public static class ProductRequest {
-        private String name;
-        private String description;
-        private String barcode;
-        private BigDecimal price;
-        private Integer stockQuantity;
-        private String category;
-        private String manufacturer;
-        private String location;
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public String getDescription() {
-            return description;
-        }
-
-        public void setDescription(String description) {
-            this.description = description;
-        }
-
-        public String getBarcode() {
-            return barcode;
-        }
-
-        public void setBarcode(String barcode) {
-            this.barcode = barcode;
-        }
-
-        public BigDecimal getPrice() {
-            return price;
-        }
-
-        public void setPrice(BigDecimal price) {
-            this.price = price;
-        }
-
-        public Integer getStockQuantity() {
-            return stockQuantity;
-        }
-
-        public void setStockQuantity(Integer stockQuantity) {
-            this.stockQuantity = stockQuantity;
-        }
-
-        public String getCategory() {
-            return category;
-        }
-
-        public void setCategory(String category) {
-            this.category = category;
-        }
-
-        public String getManufacturer() {
-            return manufacturer;
-        }
-
-        public void setManufacturer(String manufacturer) {
-            this.manufacturer = manufacturer;
-        }
-
-        public String getLocation() {
-            return location;
-        }
-
-        public void setLocation(String location) {
-            this.location = location;
-        }
     }
 }

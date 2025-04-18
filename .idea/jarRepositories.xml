@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="RemoteRepositoriesConfiguration">
+    <remote-repository>
+      <option name="id" value="central" />
+      <option name="name" value="central" />
+      <option name="url" value="http://ticepnexus.ep.petrobras.com.br:8081/nexus/content/groups/public/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="canalcliente-maven-petrobras" />
+      <option name="name" value="canalcliente-maven-petrobras" />
+      <option name="url" value="http://nexus.petrobras.com.br/nexus/content/groups/public" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="petrobras-maven" />
+      <option name="name" value="petrobras-maven" />
+      <option name="url" value="http://maven.petrobras.com.br" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="central" />
+      <option name="name" value="Maven Central repository" />
+      <option name="url" value="https://repo1.maven.org/maven2" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="canalcliente-thirdparty" />
+      <option name="name" value="canalcliente-thirdparty" />
+      <option name="url" value="http://nexus.petrobras.com.br/nexus/content/repositories/isp-3rdparty" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="jboss.community" />
+      <option name="name" value="JBoss Community repository" />
+      <option name="url" value="https://repository.jboss.org/nexus/content/repositories/public/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="snep-central" />
+      <option name="name" value="snep-central" />
+      <option name="url" value="http://maven.petrobras.com.br" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="cacl-local-dsv" />
+      <option name="name" value="cacl-local-dsv" />
+      <option name="url" value="file://C:\Projetos\ambiente_desenvolvimento\maven_repositorios\repository_cacl_dsv" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="snapshots" />
+      <option name="name" value="snapshots" />
+      <option name="url" value="http://ticepnexus.ep.petrobras.com.br:8081/nexus/content/groups/public/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="canalcliente-releases" />
+      <option name="name" value="canalcliente-releases" />
+      <option name="url" value="http://nexus.petrobras.com.br/nexus/content/repositories/isp-releases" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="central" />
+      <option name="name" value="Central Repository" />
+      <option name="url" value="http://ticepnexus.ep.petrobras.com.br:8081/nexus/content/groups/public/" />
+    </remote-repository>
+  </component>
+</project>
