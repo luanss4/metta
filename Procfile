@@ -1,2 +1,2 @@
-release: npm --prefix src/main/resources/static/frontend install && npm --prefix src/main/resources/static/frontend run build
+release: npm --prefix ../../frontend install && npm --prefix ../../frontend run build && xcopy /E /I ../../frontend/dist C:\Projetos\metta\backend\src\main\resources\static
 web: java -Dserver.port=$PORT -jar target/*.jar
