@@ -1,2 +1,2 @@
-release: npm --prefix ./frontend install && npm --prefix ./frontend run build && xcopy /E /I ./frontend/dist ./backend/src/main/resources/static
+release: npm --prefix ./frontend install && npx --prefix ./frontend ng build --prod && xcopy /E /I ./frontend/dist ./backend/src/main/resources/static
 web: java -Dserver.port=$PORT -jar backend/target/*.jar
