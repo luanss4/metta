@@ -23,27 +23,24 @@ public class ProductEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private String name;
+    private String descricao;
 
-    private String description;
+    private String marca;
 
-    @Column(nullable = false, unique = true)
-    private String barcode;
+    private String categoria;
 
-    @Column(nullable = false)
-    private BigDecimal price;
+    private String codigoIdentificacao;
 
-    @Column(nullable = false)
-    private Integer stockQuantity;
+    private String local;
 
-    @Column(nullable = false)
-    private String category;
+    private String responsavel;
 
-    @Column(nullable = false)
-    private String manufacturer;
+    private String voltagem;
 
-    private String location;
+    private BigDecimal valor;
+
+    @Column(unique = true)
+    private String codigoBarras;
 
     @Column(nullable = false)
     private boolean active = true;

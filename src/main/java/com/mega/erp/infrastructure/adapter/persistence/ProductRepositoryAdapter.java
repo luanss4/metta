@@ -47,14 +47,14 @@ public class ProductRepositoryAdapter implements ProductRepository {
     }
 
     @Override
-    public Optional<Product> findByBarcode(String barcode) {
-        return jpaProductRepository.findByBarcode(barcode)
+    public Optional<Product> findByCodigoBarras(String codigoBarras) {
+        return jpaProductRepository.findByCodigoBarras(codigoBarras)
                 .map(productMapper::toProduct);
     }
 
     @Override
-    public boolean existsByBarcode(String barcode) {
-        return jpaProductRepository.existsByBarcode(barcode);
+    public boolean existsByCodigoBarras(String codigoBarras) {
+        return jpaProductRepository.existsByCodigoBarras(codigoBarras);
     }
 
     @Override
@@ -68,15 +68,15 @@ public class ProductRepositoryAdapter implements ProductRepository {
     }
 
     @Override
-    public List<Product> findByNameContainingIgnoreCase(String name) {
-        return jpaProductRepository.findByNameContainingIgnoreCase(name).stream()
+    public List<Product> findByDescricaoContainingIgnoreCase(String descricao) {
+        return jpaProductRepository.findByDescricaoContainingIgnoreCase(descricao).stream()
                 .map(productMapper::toProduct)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<Product> findByCategoryIgnoreCase(String category) {
-        return jpaProductRepository.findByCategoryIgnoreCase(category).stream()
+    public List<Product> findByCategoriaIgnoreCase(String categoria) {
+        return jpaProductRepository.findByCategoriaIgnoreCase(categoria).stream()
                 .map(productMapper::toProduct)
                 .collect(Collectors.toList());
     }

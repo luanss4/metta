@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -19,6 +19,8 @@ import { PasswordModule } from 'primeng/password';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { DropdownModule } from 'primeng/dropdown';
+import { PaginatorModule } from 'primeng/paginator';
+import { SharedModule } from 'primeng/api';
 
 // Components
 import { AppComponent } from './app.component';
@@ -51,7 +53,7 @@ import { AppRoutingModule } from './app-routing.module';
     HttpClientModule,
     RouterModule,
     AppRoutingModule,
-    
+
     // PrimeNG Modules
     ButtonModule,
     InputTextModule,
@@ -64,7 +66,9 @@ import { AppRoutingModule } from './app-routing.module';
     PasswordModule,
     InputNumberModule,
     InputTextareaModule,
-    DropdownModule
+    DropdownModule,
+    PaginatorModule,
+    SharedModule
   ],
   providers: [
     AuthService,
@@ -77,6 +81,7 @@ import { AppRoutingModule } from './app-routing.module';
       multi: true
     }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }

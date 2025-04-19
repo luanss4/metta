@@ -13,17 +13,18 @@ import java.time.LocalDateTime;
 public class Product {
 
     private Long id;
-    private String name;
-    private String description;
-    private String barcode;
-    private BigDecimal price;
-    private Integer stockQuantity;
-    private String category;
-    private String manufacturer;
-    private String location;
-    private boolean active = true;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
-    private LocalDateTime deletedAt;
-    private Long version;
+    private String descricao;
+    private String marca;
+    private String categoria;
+    private String codigoIdentificacao;
+    private String local;
+    private String responsavel;
+    private String voltagem;
+    private BigDecimal valor;
+    private String codigoBarras;
+    private boolean ativo = true;
+    private LocalDateTime criadoEm;
+    private LocalDateTime atualizadoEm;
+    private LocalDateTime excluidoEm;
+    private Long versao;
 }

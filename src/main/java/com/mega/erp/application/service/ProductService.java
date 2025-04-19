@@ -28,22 +28,22 @@ public class ProductService {
 
     @Transactional(readOnly = true)
     public Optional<Product> getProductByBarcode(String barcode) {
-        return productRepository.findByBarcode(barcode);
+        return productRepository.findByCodigoBarras(barcode);
     }
 
     @Transactional(readOnly = true)
     public List<Product> searchProductsByName(String name) {
-        return productRepository.findByNameContainingIgnoreCase(name);
+        return productRepository.findByDescricaoContainingIgnoreCase(name);
     }
 
     @Transactional(readOnly = true)
     public List<Product> getProductsByCategory(String category) {
-        return productRepository.findByCategoryIgnoreCase(category);
+        return productRepository.findByCategoriaIgnoreCase(category);
     }
 
     @Transactional
     public Product createProduct(Product product) {
-        if (productRepository.existsByBarcode(product.getBarcode())) {
+        if (productRepository.existsByCodigoBarras(product.getCodigoBarras())) {
             throw new IllegalArgumentException("Product with this barcode already exists");
         }
         return productRepository.save(product);
@@ -54,20 +54,21 @@ public class ProductService {
         return productRepository.findById(id)
                 .map(existingProduct -> {
                     // Check if barcode is being changed and if it already exists
-                    if (!existingProduct.getBarcode().equals(productDetails.getBarcode()) &&
-                            productRepository.existsByBarcode(productDetails.getBarcode())) {
+                    if (!existingProduct.getCodigoBarras().equals(productDetails.getCodigoBarras()) &&
+                            productRepository.existsByCodigoBarras(productDetails.getCodigoBarras())) {
                         throw new IllegalArgumentException("Product with this barcode already exists");
                     }
 
-                    existingProduct.setName(productDetails.getName());
-                    existingProduct.setDescription(productDetails.getDescription());
-                    existingProduct.setBarcode(productDetails.getBarcode());
-                    existingProduct.setPrice(productDetails.getPrice());
-                    existingProduct.setStockQuantity(productDetails.getStockQuantity());
-                    existingProduct.setCategory(productDetails.getCategory());
-                    existingProduct.setManufacturer(productDetails.getManufacturer());
-                    existingProduct.setLocation(productDetails.getLocation());
-                    
+                    existingProduct.setDescricao(productDetails.getDescricao());
+                    existingProduct.setMarca(productDetails.getMarca());
+                    existingProduct.setCategoria(productDetails.getCategoria());
+                    existingProduct.setCodigoIdentificacao(productDetails.getCodigoIdentificacao());
+                    existingProduct.setLocal(productDetails.getLocal());
+                    existingProduct.setResponsavel(productDetails.getResponsavel());
+                    existingProduct.setVoltagem(productDetails.getVoltagem());
+                    existingProduct.setValor(productDetails.getValor());
+                    existingProduct.setCodigoBarras(productDetails.getCodigoBarras());
+
                     return productRepository.save(existingProduct);
                 })
                 .orElseThrow(() -> new IllegalArgumentException("Product not found with id: " + id));

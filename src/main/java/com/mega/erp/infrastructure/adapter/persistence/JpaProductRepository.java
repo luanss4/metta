@@ -10,8 +10,8 @@ import java.util.Optional;
 @Repository
 public interface JpaProductRepository extends JpaRepository<ProductEntity, Long> {
     List<ProductEntity> findByActiveTrue();
-    Optional<ProductEntity> findByBarcode(String barcode);
-    boolean existsByBarcode(String barcode);
-    List<ProductEntity> findByNameContainingIgnoreCase(String name);
-    List<ProductEntity> findByCategoryIgnoreCase(String category);
+    Optional<ProductEntity> findByCodigoBarras(String codigoBarras);
+    boolean existsByCodigoBarras(String codigoBarras);
+    List<ProductEntity> findByDescricaoContainingIgnoreCase(String descricao);
+    List<ProductEntity> findByCategoriaIgnoreCase(String categoria);
 }

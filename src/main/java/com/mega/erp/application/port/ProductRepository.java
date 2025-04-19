@@ -9,9 +9,9 @@ public interface ProductRepository {
     Optional<Product> findById(Long id);
     List<Product> findAll();
     List<Product> findByActiveTrue();
-    Optional<Product> findByBarcode(String barcode);
-    boolean existsByBarcode(String barcode);
+    Optional<Product> findByCodigoBarras(String codigoBarras);
+    boolean existsByCodigoBarras(String codigoBarras);
     void deleteById(Long id);
-    List<Product> findByNameContainingIgnoreCase(String name);
-    List<Product> findByCategoryIgnoreCase(String category);
+    List<Product> findByDescricaoContainingIgnoreCase(String descricao);
+    List<Product> findByCategoriaIgnoreCase(String categoria);
 }
