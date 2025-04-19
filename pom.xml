@@ -164,7 +164,7 @@
                         <configuration>
                             <nodeVersion>v18.16.0</nodeVersion>
                             <npmVersion>9.5.1</npmVersion>
-                            <installDirectory>${project.build.directory}/frontend</installDirectory>
+                            <installDirectory>${project.build.directory}/node</installDirectory>
                         </configuration>
                     </execution>
                     <execution>
