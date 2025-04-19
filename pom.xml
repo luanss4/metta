@@ -132,7 +132,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.mega.erp</mainClass>
+                    <mainClass>com.mega.erp.MegaErpApplication</mainClass>
                 </configuration>
             </plugin>
         </plugins>
