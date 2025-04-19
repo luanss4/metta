@@ -1,0 +1,28 @@
+.card {
+  margin: 20px;
+  padding: 20px;
+  border-radius: 4px;
+  box-shadow: 0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12);
+}
+
+.card-header {
+  margin-bottom: 20px;
+}
+
+.p-error {
+  color: #f44336;
+  font-size: 0.75rem;
+  margin-top: 4px;
+  display: block;
+}
+
+.field {
+  margin-bottom: 1rem;
+}
+
+.p-fluid .p-inputtext,
+.p-fluid .p-inputtextarea,
+.p-fluid .p-dropdown,
+.p-fluid .p-inputnumber {
+  width: 100%;
+}

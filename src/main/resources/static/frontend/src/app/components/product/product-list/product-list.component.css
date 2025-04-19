@@ -1,0 +1,27 @@
+.card {
+  margin: 20px;
+  padding: 20px;
+  border-radius: 4px;
+  box-shadow: 0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12);
+}
+
+.card-header {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.p-inputgroup {
+  width: 300px;
+  margin-right: 10px;
+}
+
+.p-button-rounded {
+  margin-right: 5px;
+}
+
+.text-center {
+  text-align: center;
+}
+
