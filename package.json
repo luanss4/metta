@@ -1,3 +1,6 @@
 {
-  "private": true
+  "private": true,
+  "devDependencies": {
+    "@angular/cli": "^19.2.8"
+  }
 }
