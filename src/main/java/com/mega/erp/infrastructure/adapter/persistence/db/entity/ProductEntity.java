@@ -39,7 +39,7 @@ public class ProductEntity {
 
     private BigDecimal valor;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = true, length = 16)
     private String codigoBarras;
 
     @Column(nullable = false)

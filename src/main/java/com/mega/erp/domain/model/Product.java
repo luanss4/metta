@@ -22,9 +22,9 @@ public class Product {
     private String voltagem;
     private BigDecimal valor;
     private String codigoBarras;
-    private boolean ativo = true;
-    private LocalDateTime criadoEm;
-    private LocalDateTime atualizadoEm;
-    private LocalDateTime excluidoEm;
-    private Long versao;
+    private boolean active = true;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+    private LocalDateTime deletedAt;
+    private Long version;
 }
